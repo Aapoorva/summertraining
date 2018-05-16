@@ -46,6 +46,9 @@ for x in range(2,int(math.sqrt(elmnt_len))+1):
 			print(ordr_list[-1]," : ",len(ordr_list))
 
 ordr_ch=int(input())
-row = int(ordr_list[ordr_ch-1][0])
-col = int(ordr_list[ordr_ch-1][1])
-print(np.array(elmnt).reshape(row,col))
+if ordr_ch>0 and ordr_ch<=len(ordr_list):
+	row = int(ordr_list[ordr_ch-1][0])
+	col = int(ordr_list[ordr_ch-1][1])
+	print(np.array(elmnt).reshape(row,col))
+else :
+	print("INVALID CHOICE")
