@@ -10,10 +10,33 @@ def count_words(input_list):
 		elmnt=[i,[input_list.count(i)]]
 		if elmnt[1][0]>1:
 			elmnt_index=input_list.index(i)
-			for x in range(elmnt_index, elmnt_index+elmnt[1][0]):
+			for x in range(elmnt_index, elmnt_index+elmnt[1][0]-1):
 				del input_list[elmnt_index]
 		unique_list.append(elmnt)
-	print(unique_list)
+	return unique_list
+
+# to merge lists
+def concat_list(pre_uniq_list,uniq_list):
+	"To merge previous and new list of inputs"
+	#when input for first time or after refresh
+	if len(pre_uniq_list)==0:
+		return uniq_list
+	#assuming and assigning each word occurence next time is 0
+	for y in pre_uniq_list:
+		y[1].append(0)
+	#merging
+	for x in uniq_list:
+		w_found=0
+		for y in pre_uniq_list:
+			if x[0]==y[0]:
+				w_found=1
+				y[1][-1]=x[1][0]
+				break
+		if w_found==0:
+			x[1].insert(0,0)
+			pre_uniq_list.append(x)
+	return pre_uniq_list
+
 
 #socket connection
 rec_ip="127.0.0.1"
@@ -25,19 +48,23 @@ s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 s.bind((rec_ip,rec_port)) 
 #  receiving data
 input_list=[]
+pre_uniq_list=[]
 count=0
 while True :
 	
 	#counting words after interval of 6 message
-	if count!=0 and count%6 == 0:
+	if count!=0 and count%5 == 0:
 		input_list.sort()
-		print(input_list,"\n")
-		count_words(input_list)
-		input_list.clear()
+		#words counted here
+		uniq_list = count_words(input_list)
+		#previous list combined with new data
+		pre_uniq_list = concat_list(pre_uniq_list,uniq_list)
+		print(pre_uniq_list)
+		input_list.clear()	#to store next set of input
 		print("\n\n")
 
 	count+=1
-
+	#receive data
 	data=s.recvfrom(1000)
 
 	#convert byte to string
