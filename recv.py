@@ -46,7 +46,6 @@ def plot_graph(uniq_list) :
 	x_list=[]
 	y_list=[]
 	
-	# plt.ion()
 	for x in uniq_list :
 		x_list.append(x[0])
 		y_list.append(x[1][0])
@@ -54,7 +53,6 @@ def plot_graph(uniq_list) :
 	plt.bar(x_list,y_list)
 	print(x_list)
 	print(y_list)
-	# plt.clear()
 	plt.show()
 
 #socket connection
