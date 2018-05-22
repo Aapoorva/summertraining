@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 import socket
 recv_ip="127.0.0.1"
 recv_port=9999
@@ -19,3 +18,8 @@ while True :
 	#Decode msg recieved in Unicode to String
 	msg_decoded=msg_pckt[0].decode()
 	print("Message Recieved : ",msg_decoded)
+
+	#Reply to received Message
+	reply=input("Enter Reply Message : ")
+	#sending reply
+	s.sendto(reply.encode(),(msg_pckt[-1][0],msg_pckt[-1][-1]))

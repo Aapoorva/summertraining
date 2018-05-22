@@ -19,3 +19,9 @@ while True:
 	msg=input("Enter Message : ")
 	#msg in python3 sendto accepts unicode msg(i.e. in bytes)
 	s.sendto(msg.encode(),(recv_ip,recv_port))
+
+	#recieving reply message
+	reply_pckt=s.recvfrom(1000)
+	#Decode reply from unicode to string
+	reply_decoded=reply_pckt[0].decode()
+	print("Reply Message : ",reply_decoded)
